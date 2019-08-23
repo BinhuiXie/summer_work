@@ -19,13 +19,13 @@ I finished this project inspired by **Maximum Classifier Discrepancy for Domain 
     - ResFCN
 
 ```
-python adapt_trainer.py --res 50 --epochs 20 --lr 0.001 --adjust_lr --batch_size 1 --n_class 2 --num_k 4 --train_img_shape (600, 800) --source_list data/source.txt --source_label_list data/source_label.txt --target_list data/target.txt
+python adapt_trainer.py --res 50 --epochs 20 --lr 0.0001 --adjust_lr --batch_size 1 --n_class 2 --num_k 4 --source_list data/source.txt --source_label_list data/source_label.txt --target_list data/target.txt
 ```
 Trained models will be saved as "snapshot/model/fcn-res50-EPOCH.pth.tar"
 
 ## Test
 ```
-python adapt_tester.py --test_list data/test.txt --test_img_shape (600, 800) --trained_checkpoint snapshot/model/fcn-res50-test.pth.tar
+python adapt_tester.py --test_list data/test.txt --trained_checkpoint snapshot/model/fcn-res50-test.pth.tar
 ```
 
 Results will be saved under "snapshot/test/"

@@ -23,7 +23,7 @@ warnings.filterwarnings('ignore')
 
 parser = argparse.ArgumentParser(description='Image Segmentation Task Trainer (Pytorch Implementation)')
 parser.add_argument('--seed', type=int, default=1, help='manual seed')
-parser.add_argument('--gpu', type=str, default='2', help='device id to run')
+parser.add_argument('--gpu', type=str, default='0', help='device id to run')
 parser.add_argument('--res', type=str, default='50', metavar='ResnetLayerNum',
                     choices=['18', '34', '50', '101', '152'], help='which resnet 18,50,101,152')
 parser.add_argument('--is_data_parallel', action='store_true', help='whether you use torch.nn.DataParallel')
@@ -127,16 +127,16 @@ train_loader = torch.utils.data.DataLoader(
 # start training
 # background weight: 1  shoe weight: 1
 class_weighted = torch.Tensor([args.b_weight, args.s_weight])
+class_weighted = class_weighted.cuda()
+criterion_c = CrossEntropyLoss2d(class_weighted)
+criterion_d = DiscrepancyLoss2d()
+
 G.cuda()
 F1.cuda()
 F2.cuda()
-class_weighted = class_weighted.cuda()
 G.train()
 F1.train()
 F2.train()
-
-criterion_c = CrossEntropyLoss2d(class_weighted)
-criterion_d = DiscrepancyLoss2d()
 
 for epoch in range(start_epoch, args.epochs):
     d_loss_per_epoch = 0
