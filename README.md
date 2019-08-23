@@ -1,6 +1,6 @@
 # Image Segmentation Task
 
-![](docs/overview.png)
+![](data/overview.png)
 <br>
 
 ## Installation
@@ -19,7 +19,7 @@ I finished this project inspired by **Maximum Classifier Discrepancy for Domain 
     - ResFCN
 
 ```
-python adapt_trainer.py --res 50 --epochs 20 --lr 0.0001 --adjust_lr --batch_size 1 --n_class 2 --num_k 4 --source_list data/source.txt --source_label_list data/source_label.txt --target_list data/target.txt --is_writer
+python adapt_trainer.py --res 50 --epochs 20 --lr 0.001 --adjust_lr --batch_size 1 --n_class 2 --num_k 4 --source_list data/source.txt --source_label_list data/source_label.txt --target_list data/target.txt --is_writer
 ```
 Trained models will be saved as "snapshot/model/fcn-res50-EPOCH.pth.tar"
 

@@ -29,7 +29,7 @@ parser.add_argument('--res', type=str, default='50', metavar='ResnetLayerNum',
 parser.add_argument('--is_data_parallel', action='store_true', help='whether you use torch.nn.DataParallel')
 parser.add_argument('--epochs', type=int, default=20, help='number of epochs to train (default: 20)')
 parser.add_argument('--opt', type=str, default='sgd', choices=['sgd', 'adam', 'adadelta'], help='network optimizer')
-parser.add_argument('--lr', type=float, default=0.0001, help='learning rate (default: 0.0001)')
+parser.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.001)')
 parser.add_argument('--adjust_lr', action='store_true', help='whether you change lr')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum sgd (default: 0.9)')
 parser.add_argument('--weight_decay', type=float, default=2e-5, help='weight_decay (default: 2e-5)')
