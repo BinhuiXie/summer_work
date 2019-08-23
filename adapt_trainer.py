@@ -23,20 +23,20 @@ warnings.filterwarnings('ignore')
 
 parser = argparse.ArgumentParser(description='Image Segmentation Task Trainer (Pytorch Implementation)')
 parser.add_argument('--seed', type=int, default=1, help='manual seed')
-parser.add_argument('--gpu', type=str, nargs='?', default='1', help='device id to run')
+parser.add_argument('--gpu', type=str, default='2', help='device id to run')
 parser.add_argument('--res', type=str, default='50', metavar='ResnetLayerNum',
                     choices=['18', '34', '50', '101', '152'], help='which resnet 18,50,101,152')
 parser.add_argument('--is_data_parallel', action='store_true', help='whether you use torch.nn.DataParallel')
 parser.add_argument('--epochs', type=int, default=20, help='number of epochs to train (default: 20)')
 parser.add_argument('--opt', type=str, default='sgd', choices=['sgd', 'adam', 'adadelta'], help='network optimizer')
-parser.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.001)')
+parser.add_argument('--lr', type=float, default=0.0001, help='learning rate (default: 0.0001)')
 parser.add_argument('--adjust_lr', action='store_true', help='whether you change lr')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum sgd (default: 0.9)')
 parser.add_argument('--weight_decay', type=float, default=2e-5, help='weight_decay (default: 2e-5)')
 parser.add_argument('--source_list', type=str, default='data/source.txt', help='the source path list')
 parser.add_argument('--source_label_list', type=str, default='data/source_label.txt', help='the source label path list')
 parser.add_argument('--target_list', type=str, default='data/target.txt', help='the target path list')
-parser.add_argument('-b', '--batch_size', type=int, default=1, help='batch_size')
+parser.add_argument('--batch_size', type=int, default=1, help='batch_size')
 parser.add_argument('--train_img_shape', default=(600, 800), nargs=2, metavar=("W", "H"), help="W H")
 parser.add_argument('--input_ch', type=int, default=3, choices=[1, 3, 4])
 parser.add_argument('--n_class', type=int, default=2, help='types of class ')
@@ -127,11 +127,10 @@ train_loader = torch.utils.data.DataLoader(
 # start training
 # background weight: 1  shoe weight: 1
 class_weighted = torch.Tensor([args.b_weight, args.s_weight])
-if torch.cuda.is_available():
-    G.cuda()
-    F1.cuda()
-    F2.cuda()
-    class_weighted = class_weighted.cuda()
+G.cuda()
+F1.cuda()
+F2.cuda()
+class_weighted = class_weighted.cuda()
 G.train()
 F1.train()
 F2.train()
@@ -152,8 +151,7 @@ for epoch in range(start_epoch, args.epochs):
         # vutils.save_image(target_img, 'train_target_shoe.png', normalize=True)
         # vutils.save_image(source_labels, 'train_source_label_shoe.png', normalize=True)
 
-        if torch.cuda.is_available():
-            source_img, source_labels, target_img = source_img.cuda(), source_labels.cuda(), target_img.cuda()
+        source_img, source_labels, target_img = source_img.cuda(), source_labels.cuda(), target_img.cuda()
 
         # 1 step: minimize the source class loss
         optimizer_g.zero_grad()
